@@ -1,0 +1,19 @@
+﻿@page
+@model WebApplication1.Pages.CreateModel
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<p>ENter yourname:</p>
+<form method="post">
+    <div>
+        <div asp-validation-summary="All"></div>
+        Name:
+        <input asp-for="Customer.Name" />
+
+        <input type="submit" />
+    </div>
+
+</form>
