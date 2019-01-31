@@ -4,15 +4,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Logging;
 
 namespace WebApplication1.Pages
 {
     public class CreateModel : PageModel
     {
         private readonly AppDbContext _db;
-        public CreateModel(AppDbContext db)
+        [TempData]
+        public string Message { get; set; }
+        private ILogger<CreateModel> Log;
+        public CreateModel(AppDbContext db,ILogger<CreateModel> log)
         {
             _db = db;
+            Log = Log;
         }
         [BindProperty]
         public Customer Customer { get; set; }
@@ -25,6 +30,9 @@ namespace WebApplication1.Pages
             }
             _db.Customers.Add(Customer);
             await _db.SaveChangesAsync();
+            var msg = $"Customer { Customer.Name} added!";
+            Message = msg;
+            Log.LogCritical(msg);
             return RedirectToPage("/Index");
         }
     }
